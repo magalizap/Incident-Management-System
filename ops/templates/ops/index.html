@@ -1,0 +1,18 @@
+{% extends 'ops/base.html' %}
+{% block title %} Home{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto text-center">
+            <h1 class="display-4 mb-4">Incident Management System</h1>
+            <p class="lead mb-4">Engineering reliability through structured incident management.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <a href="{% url 'ops:incident_list' %}" class="btn btn-light btn-lg px-4 gap-3">Get Started</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

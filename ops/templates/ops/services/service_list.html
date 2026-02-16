@@ -1,0 +1,38 @@
+{% extends 'ops/base.html' %}
+{% block title %} Services {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">App Services</h1>
+        <a href="{% url 'ops:service_form' %}" class="btn btn-light mb-3">Add New</a>
+        <form action="{% url 'ops:service_list' %}" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." name="search" value="{{ request.GET.search }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">App Name</th>
+                    <th scope="col">Created At</th>
+                </tr>
+            </thead>
+            {% for service in services %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ service.id }}</th>
+                            <td>{{ service.name }}</td>
+                            <td>{{ service.created_at }}</td>
+                        </tr>
+                    </tbody>
+                </a>
+            {% endfor %}
+            
+        </table>
+        
+    
+    </div>
+{% endblock content %}

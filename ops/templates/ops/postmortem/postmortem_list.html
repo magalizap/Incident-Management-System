@@ -1,0 +1,38 @@
+{% extends 'ops/base.html' %}
+{% block title %} Post-Mortem {% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Post-Mortem</h1>
+        <a href="{% url 'ops:postmortem_form' %}" class="btn btn-light mb-3">Add New</a>
+        <form action="{% url 'ops:postmortem_list' %}" method="get">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search for impact ..." name="search" value="{{ request.GET.search }}">
+                <button class="btn btn-outline-secondary" type="submit">Search</button>
+            </div>
+        </form>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Impact</th>
+                    <th scope="col">Incident Title</th>
+                    <th scope="col">Created At</th>
+                </tr>
+            </thead>
+            {% for postmortem in postmortems %}
+                <a href="#" class="list-group-item list-group-item-action">
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{ postmortem.id }}</th>
+                            <td>{{ postmortem.impact}}</td>
+                            <td>{{ postmortem.incident}}</td>
+                            <td>{{ postmortem.created_at}}</td>
+                        </tr>
+                    </tbody>
+                </a>
+            {% endfor %}
+        </table>
+        
+    </div>
+{% endblock content %}

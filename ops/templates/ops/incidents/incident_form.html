@@ -1,0 +1,27 @@
+{% extends 'ops/base.html' %}
+{% block title %}
+    Incidents - Create New One
+{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h1 class="card-title mb-4">Create New Incident</h1>
+                        <form method="post">
+                            {% csrf_token %}
+                            <table class="table">
+                                {{ incidentForm.as_table }}
+                            </table>
+
+                            <button type="submit" class="btn btn-light w-100 mt-3">Enviar</button>
+                            <a href="{%url 'ops:incident_list'%}" class="btn btn-secondary w-100 mt-2">Cancelar</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
