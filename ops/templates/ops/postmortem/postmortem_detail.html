@@ -1,0 +1,15 @@
+{% extends 'ops/base.html' %}
+{% block title %}
+PostMortem - Detail
+{% endblock title %}
+
+{% block content %}
+
+    <h1>PostMortem Detail</h1>
+    <p><strong>Title:</strong> {{ object.incident }}</p>
+    <p><strong>Origen:</strong> {{ object.root_cause }}</p>
+    <p><strong>Impact:</strong> {{ object.impact }}</p>
+    <p><strong>Resolution:</strong> {{ object.corrective_actions }}</p>
+    <p><strong>Created At:</strong> {{ object.created_at }}</p>
+
+{% endblock content %}

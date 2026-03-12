@@ -1,0 +1,12 @@
+{% extends 'ops/base.html' %}
+{% block title %}
+Services - Detail
+{% endblock title %}
+
+{% block content %}
+    <h1>Service Detail</h1>
+    <p><strong>Name:</strong> {{ object.name }}</p>
+    <p><strong>Description:</strong> {{ object.description }}</p>
+    <p><strong>Owner Team:</strong> {{ object.owner_team }}</p>
+
+{% endblock content %}

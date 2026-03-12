@@ -1,0 +1,13 @@
+{% extends 'ops/base.html' %}
+{% block title %}
+Incidents - Detail
+{% endblock title %}
+
+{% block content %}
+
+    <h1>Incident Detail</h1>
+    <p><strong>Title:</strong> {{ object.title }}</p>
+    <p><strong>Description:</strong> {{ object.description }}</p>
+    <p><strong>Status:</strong> {{ object.status }}</p>
+
+{% endblock content %}

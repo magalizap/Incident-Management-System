@@ -11,16 +11,18 @@
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
         </form>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Impact</th>
-                    <th scope="col">Incident Title</th>
-                    <th scope="col">Created At</th>
-                </tr>
-            </thead>
-            {% for postmortem in postmortems %}
+        <div class="table-response mt-5">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Impact</th>
+                        <th scope="col">Incident Title</th>
+                        <th scope="col">Created At</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                {% for postmortem in postmortems %}
                 <a href="#" class="list-group-item list-group-item-action">
                     <tbody>
                         <tr>
@@ -28,11 +30,18 @@
                             <td>{{ postmortem.impact}}</td>
                             <td>{{ postmortem.incident}}</td>
                             <td>{{ postmortem.created_at}}</td>
+                            <td>
+                                <a href="{% url 'ops:postmortem_detail' postmortem.id %}"
+                                    class="btn btn-sm btn-outline-primary">View</a>
+                                <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
                         </tr>
                     </tbody>
                 </a>
-            {% endfor %}
-        </table>
+                {% endfor %}
+            </table>
+        </div>
         
     </div>
 {% endblock content %}

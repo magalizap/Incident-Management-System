@@ -2,6 +2,7 @@ from django.shortcuts import render, get_list_or_404, redirect
 from .models import Service, Incident, PostMortem
 from django.contrib.auth.decorators import login_required
 from .forms import ServiceForm, IncidentForm, PostMortemForm
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
 
 # Home
 def index(request):
@@ -9,32 +10,58 @@ def index(request):
 
 # lists
 
-def incident_list(request):
-    search = request.GET.get('search', '')
-    incidents = Incident.objects.all()
-    if search:
-        incidents = incidents.filter(title__icontains=search)
-    else:
-        incidents = Incident.objects.all()
-    return render(request, 'ops/incidents/incident_list.html', context={'incidents': incidents})
+class IncidentListView(ListView):
+    model = Incident
+    template_name = 'ops/incidents/incident_list.html'
+    context_object_name = 'incidents'
 
-def service_list(request):
-    search = request.GET.get('search', '')
-    services = Service.objects.all()
-    if search:
-        services = services.filter(name__icontains=search)
-    else:
-        services = Service.objects.all()
-    return render(request, 'ops/services/service_list.html', context={'services': services})
+    def get_queryset(self):
+        self.queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            self.queryset = self.queryset.filter(title__icontains=search)
+        return self.queryset
 
-def postmortem_list(request):
-    search = request.GET.get('search', '')
-    postmortem = PostMortem.objects.all()
-    if search:
-        postmortem = postmortem.filter(impact__icontains=search)
-    else:
-        postmortem = PostMortem.objects.all()
-    return render(request, 'ops/postmortem/postmortem_list.html', context={'postmortems': postmortem})
+class ServiceListView(ListView):
+    model = Service
+    template_name = 'ops/services/service_list.html'
+    context_object_name = 'services'
+
+    def get_queryset(self):
+        self.queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            self.queryset = self.queryset.filter(name__icontains=search)
+        return self.queryset
+
+class PostMortemListView(ListView):
+    model = PostMortem
+    template_name = 'ops/postmortem/postmortem_list.html'
+    context_object_name = 'postmortems'
+
+    def get_queryset(self):
+        self.queryset = super().get_queryset()
+        search = self.request.GET.get('search', '')
+        if search:
+            self.queryset = self.queryset.filter(impact__icontains=search)
+        return self.queryset
+
+
+# details
+
+class IncidentDetailView(DetailView):
+    model = Incident
+    template_name = 'ops/incidents/incident_detail.html'
+
+
+class ServiceDetailView(DetailView):
+    model = Service
+    template_name = 'ops/services/service_detail.html'
+
+class PostMortemDetailView(DetailView):
+    model = PostMortem
+    template_name = 'ops/postmortem/postmortem_detail.html'
+
 
 
 # forms
