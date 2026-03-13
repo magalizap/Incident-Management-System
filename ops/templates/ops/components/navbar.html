@@ -1,7 +1,6 @@
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <!-- El logo siempre lleva al index -->
             <a class="navbar-brand" href="{% url 'ops:index' %}">IMS</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -10,7 +9,6 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <!-- Solo mostramos el menú principal si el usuario se identificó -->
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/admin">Admin</a>
@@ -30,7 +28,6 @@
                     {% endif %}
                 </ul>
 
-                <!-- Sección de cuenta a la derecha -->
                 <ul class="navbar-nav ms-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item d-flex align-items-center">
