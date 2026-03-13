@@ -1,17 +1,42 @@
-from django.shortcuts import render, get_list_or_404, redirect
+from django.shortcuts import render
 from .models import Service, Incident, PostMortem
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ServiceForm, IncidentForm, PostMortemForm
-from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView, TemplateView
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 from django.urls import reverse_lazy
 
-# Home
-def index(request):
-    return render(request, 'ops/index.html')
+# auth
+class CustomLoginView(LoginView):
+    template_name = 'ops/auth/login.html'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('ops:index')
+
+class CustomLogoutView(LogoutView):
+    next_page = reverse_lazy('ops:login')
+
+class RegisterView(CreateView):
+    template_name = 'ops/auth/register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('ops:login')
+
+    def form_valid(self, form):
+        messages.success(self.request, 'Account created successfully. You can now log in.')
+        return super().form_valid(form)
+    
+# pages
+    
+class HomeView(TemplateView):
+    template_name = 'ops/index.html'
+
+class AboutView(TemplateView):
+    template_name = 'ops/components/about.html'
+
 
 # lists
-
 class IncidentListView(ListView):
     model = Incident
     template_name = 'ops/incidents/incident_list.html'
@@ -101,24 +126,7 @@ class PostMortemDeleteView(DeleteView):
 
 
 # forms
-
-"""@login_required
-def incident_form(request):
-    if request.method == 'POST':
-        form = IncidentForm(request.POST)
-        if form.is_valid():
-            incident = form.save(commit=False)
-            incident.autor = request.user
-            incident.save()
-            return redirect('ops:incident_list')
-    else:
-        form = IncidentForm()
-
-    return render(request, 'ops/incidents/incident_form.html', {
-        'incidentForm': form
-    })"""
-
-class IncidentCreateView(LoginRequiredMixin, CreateView):
+class IncidentCreateView(CreateView):
     model = Incident
     form_class = IncidentForm
     template_name = 'ops/incidents/incident_form.html'
@@ -128,24 +136,7 @@ class IncidentCreateView(LoginRequiredMixin, CreateView):
         form.instance.autor = self.request.user
         return super().form_valid(form)
     
-
-"""@login_required
-def service_form(request):
-    if request.method == 'POST':
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            service = form.save(commit=False)
-            service.autor = request.user
-            service.save()
-            return redirect('ops:service_list')
-    else:
-        form = ServiceForm()
-
-    return render(request, 'ops/services/service_form.html', {
-        'serviceForm': form
-    })"""
-
-class ServiceCreateView(LoginRequiredMixin, CreateView):
+class ServiceCreateView(CreateView):
     model = Service
     form_class = ServiceForm
     template_name = 'ops/services/service_form.html'
@@ -154,27 +145,9 @@ class ServiceCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.autor = self.request.user
         return super().form_valid(form)
-    
 
 
-
-"""@login_required
-def postmortem_form(request):
-    if request.method == 'POST':
-        form = PostMortemForm(request.POST)
-        if form.is_valid():
-            postmortem = form.save(commit=False)
-            postmortem.autor = request.user
-            postmortem.save()
-            return redirect('ops:postmortem_list')
-    else:
-        form = PostMortemForm()
-    
-    return render(request, 'ops/postmortem/postmortem_form.html', {
-        'postMortemForm': form
-    })"""
-
-class PostMortemCreateView(LoginRequiredMixin, CreateView):
+class PostMortemCreateView(CreateView):
     model = PostMortem
     form_class = PostMortemForm
     template_name = 'ops/postmortem/postmortem_form.html'

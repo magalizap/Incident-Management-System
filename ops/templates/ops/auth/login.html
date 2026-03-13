@@ -1,0 +1,42 @@
+{% extends "ops/base.html" %} <!-- O la ruta que estés usando -->
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card bg-dark border-secondary shadow-lg" style="width: 100%; max-width: 450px;">
+        <div class="card-body p-5">
+            <h2 class="text-center text-light mb-4">Iniciar Sesión</h2>
+
+            <form method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="mb-4 text-start">
+                    <label for="{{ field.id_for_label }}" class="form-label text-secondary small uppercase fw-bold">
+                        {{ field.label }}
+                    </label>
+                    <!-- Agregamos clases de Bootstrap manualmente -->
+                    <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
+                        class="form-control bg-dark text-light border-secondary py-2" id="{{ field.id_for_label }}"
+                        placeholder="Ingrese su {{ field.label|lower }}">
+
+                    {% if field.errors %}
+                    <div class="text-danger small mt-1">{{ field.errors|first }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="text-secondary small">
+                    ¿No tenés cuenta? <a href="{% url 'ops:register' %}"
+                        class="text-info text-decoration-none">Registrate acá</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

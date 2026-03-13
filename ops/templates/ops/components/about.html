@@ -1,0 +1,38 @@
+{% extends "ops/base.html" %}
+
+{% block title %} Sobre mí {% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card bg-dark border-secondary shadow-lg w-100" style="max-width: 600px;">
+        <div class="card-body p-5 text-center">
+            <!-- Avatar o Icono -->
+            <div class="mb-4">
+                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center shadow"
+                    style="width: 80px; height: 80px;">
+                    <span class="fs-1 fw-bold text-white">M</span>
+                </div>
+            </div>
+
+            <h2 class="text-light mb-1">Magalí</h2>
+            <p class="text-info mb-4">Desarrolladora Full Stack en formación</p>
+
+            <hr class="border-secondary mb-4">
+
+            <div class="text-start text-secondary">
+                <p><strong class="text-light">Edad:</strong> 22 años</p>
+                <p><strong class="text-light">Estudios:</strong> Carrera Desarrollo Full Stack en Coderhouse</p>
+                <p><strong class="text-light">Estado Actual:</strong> Actualmente trabajando</p>
+                <p><strong class="text-light">Objetivo:</strong> Buscando sumar nuevos conocimientos y desafíos en el
+                    mundo IT.</p>
+            </div>
+
+            <div class="mt-4 pt-3">
+                <a href="{% url 'ops:index' %}" class="btn btn-outline-primary px-4 fw-bold">
+                    Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
